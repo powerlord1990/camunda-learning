@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  elasticsearch:
+    uris: http://127.0.0.1:9200
+
+  camunda:
+    bpm:
+      dmn:
+        enable: true
+        resource-folder: classpath:dmn/
+  logging:
+    level:
+      root: INFO
+      org.camunda: WARN
+      com.company:dmnscoring: DEBUG

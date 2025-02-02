@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             id="Definitions_1"
+             name="Scoring Decision"
+             namespace="https://example.com/dmn"
+             exporter="Camunda Modeler"
+             exporterVersion="5.0.0">
+
+  <inputData id="InputData_1" name="Scoring Input">
+    <variable id="Variable_1" name="Scoring Variables" typeRef="string"/>
+  </inputData>
+
+  <decision id="Decision_1" name="Scoring Decision">
+    <variable id="ResultVariable" name="Result" typeRef="boolean"/>
+    <literalExpression id="LiteralExpression_1">
+      <text>
+        if isIP then false
+        else if regionCode = 24 then false
+        else if capital &lt; 5000000 then false
+        else if substring(inn, 1, 4) = "9909" then false
+        else true
+      </text>
+    </literalExpression>
+  </decision>
+
+</definitions>
