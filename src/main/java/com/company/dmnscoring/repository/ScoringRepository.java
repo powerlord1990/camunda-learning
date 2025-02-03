@@ -1,9 +1,9 @@
 package com.company.dmnscoring.repository;
 
-import com.company.dmnscoring.model.ScoringResult;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import com.company.dmnscoring.entity.ScoringResult;
+//import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 public interface ScoringRepository
-//      extends ElasticsearchRepository<ScoringResult, String>
+// extends ElasticsearchRepository<ScoringResult, String>
 {
 }

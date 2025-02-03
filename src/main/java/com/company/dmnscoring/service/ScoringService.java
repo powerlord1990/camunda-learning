@@ -1,10 +1,9 @@
 package com.company.dmnscoring.service;
 
 import com.company.dmnscoring.model.ScoringRequest;
-
-import java.util.Map;
+import com.company.dmnscoring.model.ScoringResponse;
 
 public interface ScoringService {
 
-    Map<String, Object> evaluateScoring(ScoringRequest request);
+    ScoringResponse evaluateScoring(ScoringRequest request);
 }

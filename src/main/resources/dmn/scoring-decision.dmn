@@ -2,27 +2,92 @@
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
              xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
              xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
-             id="Definitions_1"
-             name="Scoring Decision"
-             namespace="https://example.com/dmn"
-             exporter="Camunda Modeler"
-             exporterVersion="5.0.0">
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="Definitions_1" name="Scoring Decision" namespace="http://camunda.org/dmn">
+  <decision id="companyScoreDecision" name="Компания - Оценка">
+    <decisionTable id="decisionTable" hitPolicy="COLLECT">
+      <!-- Входные данные -->
+      <input id="RegionCodeInput" label="RegionCode">
+        <inputExpression typeRef="integer">
+          <text>RegionCode</text>
+        </inputExpression>
+      </input>
+      <input id="CapitalInput" label="Capital">
+        <inputExpression typeRef="long">
+          <text>Capital</text>
+        </inputExpression>
+      </input>
+      <input id="InnInput" label="Inn">
+        <inputExpression typeRef="string">
+          <text>Inn</text>
+        </inputExpression>
+      </input>
+      <!-- Выходные данные -->
+      <output id="resultOutput" label="Result" typeRef="string"/>
 
-  <inputData id="InputData_1" name="Scoring Input">
-    <variable id="Variable_1" name="Scoring Variables" typeRef="string"/>
-  </inputData>
+      <!-- Правило 1: Запрещенный регион -->
+      <rule id="Rule1">
+        <inputEntry id="InputEntry1_Rule1">
+          <text>RegionCode = 24</text> <!-- RegionCode >= 24 -->
+        </inputEntry>
+        <inputEntry id="InputEntry2_Rule1">
+          <text></text> <!-- Игнорируем Capital -->
+        </inputEntry>
+        <inputEntry id="InputEntry3_Rule1">
+          <text></text> <!-- Игнорируем Inn -->
+        </inputEntry>
+        <outputEntry>
+          <text>"Компания находится в запрещенном регионе (Красноярский край)"</text>
+        </outputEntry>
+      </rule>
 
-  <decision id="Decision_1" name="Scoring Decision">
-    <variable id="ResultVariable" name="Result" typeRef="boolean"/>
-    <literalExpression id="LiteralExpression_1">
-      <text>
-        if isIP then false
-        else if regionCode = 24 then false
-        else if capital &lt; 5000000 then false
-        else if substring(inn, 1, 4) = "9909" then false
-        else true
-      </text>
-    </literalExpression>
+      <!-- Правило 2: Капитал меньше 5 млн -->
+      <rule id="Rule2">
+        <inputEntry id="InputEntry1_Rule2">
+          <text></text> <!-- Игнорируем RegionCode -->
+        </inputEntry>
+        <inputEntry id="InputEntry2_Rule2">
+          <text>Capital &lt;5000000</text> <!-- Капитал меньше 5 млн -->
+        </inputEntry>
+        <inputEntry id="InputEntry3_Rule2">
+          <text></text> <!-- Игнорируем Inn -->
+        </inputEntry>
+        <outputEntry>
+          <text>"Капитал компании меньше 5 000 000"</text>
+        </outputEntry>
+      </rule>
+
+      <!-- Правило 3: Компания не является резидентом РФ -->
+      <rule id="Rule3">
+        <inputEntry id="InputEntry1_Rule3">
+          <text></text> <!-- Игнорируем RegionCode -->
+        </inputEntry>
+        <inputEntry id="InputEntry2_Rule3">
+          <text></text> <!-- Игнорируем Capital -->
+        </inputEntry>
+        <inputEntry id="InputEntry3_Rule3">
+          <text>starts with(Inn, "9909")</text> <!-- Проверка на ИНН -->
+        </inputEntry>
+        <outputEntry>
+          <text>"Компания не является резидентом РФ"</text>
+        </outputEntry>
+      </rule>
+
+      <!-- Правило 4: Компания является ИП -->
+      <rule id="Rule4">
+        <inputEntry id="InputEntry1_Rule4">
+          <text></text> <!-- Игнорируем RegionCode -->
+        </inputEntry>
+        <inputEntry id="InputEntry2_Rule4">
+          <text></text> <!-- Игнорируем Capital -->
+        </inputEntry>
+        <inputEntry id="InputEntry3_Rule4">
+          <text>matches(Inn, "^.{12}$")</text> <!-- Проверка длины Inn -->
+        </inputEntry>
+        <outputEntry>
+          <text>"Компания является ИП"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
   </decision>
-
 </definitions>

@@ -3,13 +3,9 @@ server:
 
 spring:
   elasticsearch:
-    uris: http://127.0.0.1:9200
+#    uris: http://127.0.0.1:9200 # для локального
+    uris: http://elasticsearch:9200 # для docker
 
-  camunda:
-    bpm:
-      dmn:
-        enable: true
-        resource-folder: classpath:dmn/
   logging:
     level:
       root: INFO

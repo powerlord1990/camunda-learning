@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,9 +22,7 @@ public class ScoringController {
 
     @PostMapping
     public ResponseEntity<ScoringResponse> scoreCompany(@RequestBody ScoringRequest request) {
-        log.info("!!!! {}", request);
-        Map<String, Object> result = scoringService.evaluateScoring(request);
-        Boolean success = (Boolean) result.get("Result");
-        return ResponseEntity.ok(new ScoringResponse(success, result));
+        log.info("Получен запрос на оценку: {}", request);
+        return ResponseEntity.ok(scoringService.evaluateScoring(request));
     }
 }
